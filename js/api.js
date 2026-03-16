@@ -1,4 +1,4 @@
-const API_KEY = "95fb1230"
+import { API_KEY } from "./config.js"
 const BASE_URL = "https://www.omdbapi.com"
 
 export async function fetchTitles(query){

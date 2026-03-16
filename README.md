@@ -1,2 +1,20 @@
-# TItles-db
-An app where you can search different type of titles. Since Movies, series, documentaries and more. This app is in process, so the functions and features can change in the future.  The name has still not been selected.
+Movie Search App
+
+Buscador de películas construido con JavaScript puro consumiendo la API de OMDb
+
+Features actuales: 
+- búsqueda de títulos
+- render dinámico de resultados
+- manejo de posters faltantes
+- estados de loading y resultados vacíos 
+
+Stack: 
+- HTML
+- CSS
+- JavaScript (ES Modules)
+- OMDb API
+
+Roadmap: 
+- historial de búsquedas
+- página de detalle de película
+- favoritos con localStorage
