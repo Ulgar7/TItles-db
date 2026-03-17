@@ -2,6 +2,8 @@ export const state = {
     query: "",
     titles: [],
     loading: false,
-    error: null
+    error: null,
+    selectedTitle: null,
+    view: null 
 }
 

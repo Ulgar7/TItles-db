@@ -1,5 +1,5 @@
-import { fetchTitles } from "./api.js";
-import { renderTitles, showLoading, showEmpty, clearStatus } from "./ui.js";
+import { fetchTitles, fetchTitleById } from "./api.js";
+import { renderTitles, showLoading, showEmpty, clearStatus, renderDetail } from "./ui.js";
 import { state } from "./state.js";
 
 export async function searchTitles(query) {
@@ -11,7 +11,7 @@ export async function searchTitles(query) {
         showLoading()
 
         const data = await fetchTitles(query)
-
+        
         state.loading = false
 
         if (data.Response === "False"){
@@ -37,4 +37,14 @@ export async function searchTitles(query) {
 
     // renderTitles(data.Search)
     // console.log(data)
+}
+
+export async function handleSelectTitle(id) {
+    const data = await fetchTitleById(id)
+    console.log(data)
+
+    state.selectedTitle = data
+    state.view = "detail"
+
+    renderDetail(data)
 }

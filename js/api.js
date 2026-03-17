@@ -12,3 +12,12 @@ export async function fetchTitles(query){
     return data
 }
 
+export async function fetchTitleById(id) {
+    const url = `${BASE_URL}?apikey=${API_KEY}&i=${id}`
+
+    const response = await fetch(url)
+    const data = await response.json()
+
+    return data
+}
+

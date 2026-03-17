@@ -1,3 +1,6 @@
+import { handleSelectTitle } from "./logic.js"
+import { state } from "./state.js"
+
 export function renderTitles(titles){
     
     const resultsContainer = document.querySelector( "#results" )
@@ -18,9 +21,14 @@ export function renderTitles(titles){
          <h3>${title.Title}</h3>
          <p>${title.Year}</p>
          `
+          card.addEventListener("click", () => {
+        handleSelectTitle(title.imdbID)
+    })
 
          resultsContainer.appendChild(card)
     })
+
+    
 }
 
 export function showLoading() {
@@ -36,6 +44,27 @@ export function showEmpty(){
 export function clearStatus(){
     const status = document.querySelector("#status")
     status.textContent = ""
+}
+
+export function renderDetail(title) {
+     const container = document.querySelector("#results")
+
+     container.innerHTML = `
+     <div>
+        <button id="backBtn"> ← Volver</button>
+
+        <h2>${title.Title}</h2>
+        <img src="${title.Poster}" alt="${title.Title}"/>
+        <p><strong>Año:</strong>${title.Year}</p>
+        <p><strong>Director:</strong>${title.Director}</p>
+        <p><strong>Actores:</strong>${title.Actors}</p> 
+        <p><strong>Trama:</strong>${title.Plot}</p>
+     </div>
+     `
+     document.querySelector("#backBtn").addEventListener("click", () =>{
+        renderTitles(state.titles)
+     })
+     
 }
 
 

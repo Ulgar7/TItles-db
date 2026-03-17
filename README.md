@@ -1,12 +1,12 @@
 Movie Search App
 
-Buscador de películas construido con JavaScript puro consumiendo la API de OMDb
-
-Features actuales: 
-- búsqueda de títulos
-- render dinámico de resultados
-- manejo de posters faltantes
-- estados de loading y resultados vacíos 
+Titles searcher developed with JavaScript vanilla using OMDB's API
+ 
+Current features: 
+- Title searcher
+- Dynamic results render
+- Handling missing posters
+- Loading and empty results states
 
 Stack: 
 - HTML
@@ -15,6 +15,6 @@ Stack:
 - OMDb API
 
 Roadmap: 
-- historial de búsquedas
-- página de detalle de película
-- favoritos con localStorage
+- Search history
+- Movie detail page
+- Favorite with local storage

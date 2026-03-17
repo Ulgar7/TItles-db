@@ -1,4 +1,4 @@
-import { searchTitles } from "./logic.js"
+import { handleSelectTitle, searchTitles } from "./logic.js"
 
 const form = document.querySelector("#search-form")
 
@@ -9,5 +9,6 @@ form.addEventListener("submit", async (e) => {
     const query = input.value
 
     await searchTitles(query)
+    
     
 })
