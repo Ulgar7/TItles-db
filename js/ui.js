@@ -62,9 +62,22 @@ export function renderDetail(title) {
      </div>
      `
      document.querySelector("#backBtn").addEventListener("click", () =>{
-        renderTitles(state.titles)
+        state.view = "list" 
+
+        console.log(state)
+        renderApp()
      })
      
+}
+
+export function renderApp(){
+    console.log("renderApp:", state)
+
+    if (state.view === "detail"){
+        renderDetail(state.selectedTitle)
+    }else{
+        renderTitles(state.titles)
+    }
 }
 
 
