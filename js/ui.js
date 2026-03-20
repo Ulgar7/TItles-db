@@ -1,4 +1,4 @@
-import { handleSelectTitle } from "./logic.js"
+import { handleSelectTitle, searchTitles} from "./logic.js"
 import { state } from "./state.js"
 
 export function renderTitles(titles){
@@ -78,6 +78,23 @@ export function renderApp(){
     }else{
         renderTitles(state.titles)
     }
+}   
+
+export function renderHistory(history) {
+    const container = document.querySelector("#status")
+
+    container.innerHTML = ""
+
+    history.forEach( query => {
+        const btn = document.createElement("button")
+        btn.textContent = query
+
+        btn.addEventListener("click", () => {
+            searchTitles(query)
+        })
+
+        container.appendChild(btn)
+    })
 }
 
 

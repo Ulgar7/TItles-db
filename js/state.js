@@ -4,6 +4,9 @@ export const state = {
     loading: false,
     error: null,
     selectedTitle: null,
-    view: null 
+    view: null,
+    history: []
 }
+
+
 

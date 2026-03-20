@@ -1,5 +1,5 @@
 import { fetchTitles, fetchTitleById } from "./api.js";
-import { renderTitles, showLoading, showEmpty, clearStatus, renderDetail, renderApp } from "./ui.js";
+import { renderTitles, showLoading, showEmpty, clearStatus, renderDetail, renderApp, renderHistory, } from "./ui.js";
 import { state } from "./state.js";
 
 export async function searchTitles(query) {
@@ -7,13 +7,14 @@ export async function searchTitles(query) {
         state.query = query
         state.loading = true
         state.error = null
-
+        
+        
         showLoading()
-
+        
         const data = await fetchTitles(query)
         
         state.loading = false
-
+        
         if (data.Response === "False"){
             state.titles = []
             renderTitles([])
@@ -21,13 +22,17 @@ export async function searchTitles(query) {
             showEmpty()
             return
         }
-
+        
+        state.history.push(query)
         state.titles = data.Search
-
+        
         console.log(state)
-
+        console.log(state.history)
+        
         clearStatus()
         renderTitles(state.titles)
+        renderHistory(state.history)
+        localStorage.setItem("history", JSON.stringify(state.history))
     } catch (error){
 
         state.loading = false
