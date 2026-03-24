@@ -1,0 +1,60 @@
+body{
+    font-family: sans-serif;
+    padding: 1rem;
+}
+
+form{
+    display: flex;
+    gap: 0.5rem;
+}
+
+input{
+    flex: 1;
+    padding: 0.5rem;
+}
+
+button{
+    padding: 0.5rem;
+}
+
+#results{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+#results div{
+    border: 1px solid #ccc;
+    padding: 0.5rem;
+    border-radius: 8px;
+}
+
+img{
+    width: 100%;
+    border-radius: 6px;
+}
+
+#status{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1rem 0;
+}
+
+#status button{
+    padding: 0.3rem 0.6rem;
+    border-radius: 999px;
+    border: 1px solid #ccc;
+}
+
+@media (min-width: 768px) {
+    #results {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    #results {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
