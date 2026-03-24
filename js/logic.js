@@ -64,3 +64,12 @@ export function removeFromHistory(query){
 
     renderHistory(state.history)
 }
+
+export function clearHistory() {
+    
+    state.history = []
+
+    localStorage.removeItem("history")
+
+    renderHistory(state.history)
+}

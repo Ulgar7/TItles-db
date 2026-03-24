@@ -1,4 +1,4 @@
-import { handleSelectTitle, searchTitles, removeFromHistory} from "./logic.js"
+import { handleSelectTitle, searchTitles, removeFromHistory, clearHistory} from "./logic.js"
 import { state } from "./state.js"
 
 
@@ -89,6 +89,15 @@ export function renderHistory(history) {
     const container = document.querySelector("#status")
 
     container.innerHTML = ""
+    
+    const clearBtn = document.createElement("button")
+    clearBtn.textContent = "Clear history"
+    
+    clearBtn.addEventListener("click", () => {
+        clearHistory()
+    })
+
+    container.appendChild(clearBtn)
 
     history.forEach( query => {
         const btn = document.createElement("button")
