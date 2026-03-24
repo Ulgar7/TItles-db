@@ -4,6 +4,8 @@ import { state } from "./state.js";
 
 export async function searchTitles(query) {
     try {
+        const normalizedQuery = query.toLowerCase()
+
         state.query = query
         state.loading = true
         state.error = null
@@ -24,8 +26,8 @@ export async function searchTitles(query) {
         }
         
         // state.history.push(query)
-        state.history = state.history.filter(item => item !== query)
-        state.history.unshift(query)
+        state.history = state.history.filter(item => item !== normalizedQuery)
+        state.history.unshift(normalizedQuery)
         state.history = state.history.slice(0, 5)
         state.titles = data.Search
         
