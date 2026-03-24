@@ -23,7 +23,10 @@ export async function searchTitles(query) {
             return
         }
         
-        state.history.push(query)
+        // state.history.push(query)
+        state.history = state.history.filter(item => item !== query)
+        state.history.unshift(query)
+        state.history = state.history.slice(0, 5)
         state.titles = data.Search
         
         console.log(state)
@@ -38,10 +41,7 @@ export async function searchTitles(query) {
         state.loading = false
         state.error = error
     }
-    // const data = await fetchTitles(query)
-
-    // renderTitles(data.Search)
-    // console.log(data)
+    
 }
 
 export async function handleSelectTitle(id) {
@@ -54,5 +54,13 @@ export async function handleSelectTitle(id) {
     console.log(state)
 
     renderApp()
-    // renderDetail(data)
+
+}
+
+export function removeFromHistory(query){
+    state.history = state.history.filter(item => item !== query)
+
+    localStorage.setItem("history", JSON.stringify(state.history))
+
+    renderHistory(state.history)
 }

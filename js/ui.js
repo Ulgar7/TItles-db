@@ -1,5 +1,6 @@
-import { handleSelectTitle, searchTitles} from "./logic.js"
+import { handleSelectTitle, searchTitles, removeFromHistory} from "./logic.js"
 import { state } from "./state.js"
+
 
 export function renderTitles(titles){
     
@@ -23,9 +24,13 @@ export function renderTitles(titles){
          `
           card.addEventListener("click", () => {
         handleSelectTitle(title.imdbID)
+        
     })
+    
 
          resultsContainer.appendChild(card)
+
+         
     })
 
     
@@ -87,10 +92,18 @@ export function renderHistory(history) {
 
     history.forEach( query => {
         const btn = document.createElement("button")
-        btn.textContent = query
+
+        btn.innerHTML = `
+        ${query} <span style="margin-left:8px; cursor:pointer;">✖</span>
+        `
 
         btn.addEventListener("click", () => {
             searchTitles(query)
+        })
+
+        btn.querySelector("span").addEventListener("click", (e) => {
+            e.stopPropagation()
+            removeFromHistory(query)
         })
 
         container.appendChild(btn)
