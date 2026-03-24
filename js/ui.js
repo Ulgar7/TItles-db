@@ -15,12 +15,18 @@ export function renderTitles(titles){
             : "https://placehold.co/300x450"
         
          const card = document.createElement("div")
+         card.classList.add("card")
 
          card.innerHTML = `
-         <img src="${poster}" alt="${title.Title}"
-         onerror="this.src='https://placehold.co/300x450'">
-         <h3>${title.Title}</h3>
-         <p>${title.Year}</p>
+         
+            <img src="${poster}" alt="${title.Title}"
+            onerror="this.src='https://placehold.co/300x450'">
+
+            <div class="card-overlay">
+                <h3>${title.Title}</h3>
+                <p>${title.Year}</p>
+            </div>
+         
          `
           card.addEventListener("click", () => {
         handleSelectTitle(title.imdbID)

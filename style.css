@@ -19,16 +19,79 @@ button{
 
 #results{
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2,1fr);
     gap: 1rem;
 }
 
-#results div{
-    border: 1px solid #ccc;
-    padding: 0.5rem;
-    border-radius: 8px;
+/* #results div{
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2 ease;
+} */
+
+/* #results div:hover{
+    transform: scale(1.04);
+} */
+
+.card{
+    position: relative;
+    cursor: pointer;
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #111;
+    transition: transform 0.2s ease;
 }
 
+.card:hover{
+    transform: scale(1.04);
+}
+
+.card img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-overlay{
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    padding: 0.7rem;
+
+    
+
+    background: linear-gradient(
+        to top,
+        rgba(0,0,0,0.9),
+        rgba(0,0,0,0.4),
+        transparent
+    );
+
+    color: white;
+}
+
+.card:hover .card-overlay{
+    opacity: 1;
+}
+
+.card-overlay h3{
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.card-overlay p{
+    color: white;
+    font-size: 0.75rem;
+    opacity: 0.8;
+}
 img{
     width: 100%;
     border-radius: 6px;
@@ -49,12 +112,12 @@ img{
 
 @media (min-width: 768px) {
     #results {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
     }
 }
 
 @media (min-width: 1024px) {
     #results {
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(5, 1fr);
     }
 }
