@@ -13,7 +13,7 @@ export async function searchTitles(query) {
         
         showLoading()
         
-        const data = await fetchTitles(query)
+        const data = await fetchTitles(query, state.type)
         
         state.loading = false
         

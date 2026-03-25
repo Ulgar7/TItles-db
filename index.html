@@ -8,18 +8,31 @@
 </head>
 <body>
     <h1>Buscador de peliculas</h1>
-
+    
     <form id="search-form">
         <input type="text"
         id="search-input"
         placeholder="Buscar película..."
         autocomplete="off">
-        <button type="submit">Buscar</button>
+        <button class="btnSubmit" type="submit">Buscar</button>
     </form>
-
     <div id="status"></div>
+    <div class="layout">
+        <aside id="filters">
+            <button data-type="all">Todos</button>
+            <button data-type="movie">Películas</button>
+            <button data-type="series">Series</button>
+        </aside>
+        <main id="results"></main>
+    </div>
+    <!-- <div id="filters">
+        <button data-type="all">Todos</button>
+        <button data-type="movie">Películas</button>
+        <button data-type="series">Series</button>
+    </div> -->
 
-    <div id="results"></div>
+
+    <!-- <div id="results"></div> -->
 
     <script type="module" src="./js/main.js"></script>
 </body>

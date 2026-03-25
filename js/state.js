@@ -5,7 +5,8 @@ export const state = {
     error: null,
     selectedTitle: null,
     view: null,
-    history: []
+    history: [],
+    type:"all"
 }
 
 

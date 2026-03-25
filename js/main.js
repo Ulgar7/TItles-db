@@ -21,3 +21,21 @@ form.addEventListener("submit", async (e) => {
     
     
 })
+
+const filters = document.querySelectorAll("#filters button")
+    
+    filters.forEach(btn => {
+        btn.addEventListener("click", async () => {
+            const type = btn.dataset.type
+            
+            state.type = type
+            filters.forEach(b => {
+                b.classList.toggle("active", b.dataset.type === state.type)
+
+            })
+            
+            if(state.query){
+                await searchTitles(state.query)
+            }
+        })
+    })
