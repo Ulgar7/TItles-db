@@ -15,6 +15,7 @@ form{
 
 input{
     border-radius: 999px;
+    border: 1px solid #ccc;
     flex: 1;
     padding: 0.5rem;
 }
@@ -26,7 +27,33 @@ button{
 .btnSubmit{
     background-color: white;
     border-radius: 999px;
-    color: #111;
+    border: 1px solid #ccc;
+}
+
+#backBtn {
+    position: relative;
+    border-radius: 999px;
+    border: 1px solid #ccc;
+}
+
+#backBtn::before{
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: var(--identity-color);
+    filter: blur(12px);
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.3s ease;
+}
+
+#backBtn:hover::before{
+    opacity: 0.6;
+}
+
+#backBtn:hover{
+    background-color: var(--identity-color) ;
+    /* border-color: var(--identity-color); */
 }
 
 #results{
