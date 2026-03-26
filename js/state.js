@@ -6,7 +6,9 @@ export const state = {
     selectedTitle: null,
     view: null,
     history: [],
-    type:"all"
+    type:"all",
+    page: 1,
+    totalResults: 0
 }
 
 

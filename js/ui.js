@@ -2,6 +2,7 @@ import { handleSelectTitle, searchTitles, removeFromHistory, clearHistory} from 
 import { state } from "./state.js"
 
 
+
 export function renderTitles(titles){
     
     const resultsContainer = document.querySelector( "#results" )
@@ -124,5 +125,55 @@ export function renderHistory(history) {
         container.appendChild(btn)
     })
 }
+
+export function renderPagination() {
+    const container = document.querySelector("#pagination")
+    container.innerHTML = ""    
+
+    const totalPages = Math.ceil(state.totalResults / 10)
+
+    const pagination = document.createElement("div")
+    pagination.classList.add("pagination")
+    
+
+    if (state.page > 1) {
+        const prevBtn = document.createElement("button")
+        prevBtn.textContent = "←"
+
+        prevBtn.addEventListener("click", () => {
+            searchTitles(state.query, state.page - 1)
+        })
+
+        pagination.appendChild(prevBtn)
+    }
+
+    for (let i = 1; i <= totalPages && i <= 7; i++){
+        const btn = document.createElement("button")
+        btn.textContent = i
+
+        if(i === state.page) {
+            btn.classList.add("active")
+        }
+        
+        btn.addEventListener("click", () => {
+            searchTitles(state.query, i)
+        })
+
+        pagination.appendChild(btn)
+    }
+
+    if (state.page < totalPages) {
+        const nextBtn = document.createElement("button")
+        nextBtn.textContent = "→"
+
+        nextBtn.addEventListener("click",() => {
+            searchTitles(state.query, state.page + 1)
+        })
+        pagination.appendChild(nextBtn)
+    }
+
+    container.appendChild(pagination)
+}
+
 
 

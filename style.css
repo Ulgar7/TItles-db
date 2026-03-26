@@ -4,6 +4,9 @@
 
 
 body{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
     font-family: sans-serif;
     padding: 1rem;
 }
@@ -167,6 +170,47 @@ img{
     color: white;
 }
 
+#pagination  {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+    padding: 1rem 0;
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+#pagination button {
+    position: relative;
+    border-radius: 999px;
+    border: 1px solid #ccc;
+    cursor: pointer
+}
+
+#pagination button.active{
+    background-color: var(--identity-color);
+    color: white;
+}
+
+#pagination button::before{
+     content: "";
+     position: absolute;
+     inset: 0;
+     background-color: var(--identity-color);
+     filter: blur(12px);
+     opacity: 0;
+     z-index: -1;
+     transition: opacity 0.3 ease;
+}
+
+#pagination button.active::before{
+    opacity: 0.6;
+}
+
+
 
 
 #filters {
@@ -217,6 +261,7 @@ img{
     grid-template-columns: 1fr;
     gap: 20px;
     margin-top: 1rem;
+    flex: 1;
 }
 
 @media (min-width: 768px) {
@@ -233,7 +278,7 @@ img{
 
 @media (min-width: 1024px) {
     #results {
-        grid-template-columns: repeat(7, 1fr);
+        grid-template-columns: repeat(5, 1fr);
         /* grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); */
     }
     .layout {
