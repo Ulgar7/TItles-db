@@ -19,9 +19,12 @@ export function renderTitles(titles){
          card.classList.add("card")
 
          card.innerHTML = `
-         
+            
+        <a href="?id=${title.imdbID}" class="poster-link">         
             <img src="${poster}" alt="${title.Title}"
             onerror="this.src='https://placehold.co/300x450'">
+        </a>
+            
 
             <div class="card-overlay">
                 <h3>${title.Title}</h3>
@@ -29,8 +32,11 @@ export function renderTitles(titles){
             </div>
          
          `
-          card.addEventListener("click", () => {
-        handleSelectTitle(title.imdbID)
+          card.addEventListener("click", (e) => {
+            e.preventDefault()
+
+            // window.history.pushState(null, "", `?id=${title.imdbID}`)
+            handleSelectTitle(title.imdbID)
         
     })
     

@@ -1,6 +1,15 @@
-import { searchTitles } from "./logic.js"
+import { handleSelectTitle, searchTitles } from "./logic.js"
 import { renderHistory } from "./ui.js"
 import { state } from "./state.js"
+
+const params = new URLSearchParams(window.location.search)
+const id = params.get("id")
+
+if (id && id !== "null") {
+    handleSelectTitle(id)
+    
+}
+
 
 const savedHistory = localStorage.getItem("history")
 

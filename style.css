@@ -2,6 +2,11 @@
     --identity-color: #8B5CF6
 }
 
+h1 a {
+    color: var(--identity-color);
+    text-decoration: none;
+}
+
 
 body{
     display: flex;
