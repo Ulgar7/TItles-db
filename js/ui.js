@@ -65,27 +65,47 @@ export function clearStatus(){
 }
 
 export function renderDetail(title) {
-     const container = document.querySelector("#results")
+    const container = document.querySelector("#results")
+    document.querySelector("#filters").style.display = "none"
+    document.querySelector("#status").style.display = "none"       
+    document.body.classList.add("detail-view")
 
-     container.innerHTML = `
-     <div>
-        <button id="backBtn"> ← Volver</button>
+    const rating = title.imdbRating !== "N/A" ? title.imdbRating : "Sin rating"
+    const genre = title.Genre !== "N/A" ? title.Genre : "Sin género"
 
-        <h2>${title.Title}</h2>
-        <img src="${title.Poster}" alt="${title.Title}"/>
-        <p><strong>Año:</strong>${title.Year}</p>
-        <p><strong>Director:</strong>${title.Director}</p>
-        <p><strong>Actores:</strong>${title.Actors}</p> 
-        <p><strong>Trama:</strong>${title.Plot}</p>
-     </div>
-     `
-     document.querySelector("#backBtn").addEventListener("click", () =>{
-        state.view = "list" 
+    container.innerHTML = `
+    <button id="backBtn"> ← Volver</button>
+    <div class="detail-container">
+        <div class="detail"> 
+            <img src="${title.Poster}" alt="${title.Title}"/>
+        <div class="detail-info">
+            <h2>${title.Title}</h2>
+            <p class="meta">
+                <span>⭐ ${rating}</span>
+                <span>🎭 ${genre}</span>
+                <span>📅 ${title.Year}</span>
+            </p>
+            
+            <p><strong>Trama:</strong>${title.Plot}</p>
+            <p><strong>Director:</strong>${title.Director}</p>
+            <p><strong>Actores:</strong>${title.Actors}</p> 
+        </div>    
 
+        </div>
+    </div>
+
+        
+        
+    `
+    document.querySelector("#backBtn").addEventListener("click", () =>{
+        state.view = "list"
         console.log(state)
+        document.querySelector("#filters").style.display = "flex"
+        document.querySelector("#status").style.display = "flex"
+        document.body.classList.remove("detail-view")  
         renderApp()
-     })
-     
+    })
+    
 }
 
 export function renderApp(){
@@ -120,6 +140,7 @@ export function renderHistory(history) {
         `
 
         btn.addEventListener("click", () => {
+            window.history.pushState(null, "", `?q=${encodeURIComponent(query)}`)
             searchTitles(query)
         })
 

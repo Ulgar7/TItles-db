@@ -4,13 +4,13 @@ import { state } from "./state.js"
 
 const params = new URLSearchParams(window.location.search)
 const id = params.get("id")
+const query = params.get("q")
 
 if (id && id !== "null") {
     handleSelectTitle(id)
-    
+}else if(query){
+    searchTitles(query)
 }
-
-
 const savedHistory = localStorage.getItem("history")
 
 if(savedHistory){
@@ -25,6 +25,8 @@ form.addEventListener("submit", async (e) => {
 
     const input = document.querySelector("#search-input")
     const query = input.value
+
+    window.history.pushState(null, "", `?q=${query}`)
 
     await searchTitles(query)
     
