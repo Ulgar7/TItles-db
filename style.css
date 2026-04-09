@@ -46,6 +46,9 @@ button{
     border: 1px solid #ccc;
     align-self: flex-start;
     margin-bottom: 1rem;
+    background-color: white;
+    font-size: 0.9rem;
+    opacity: 0.8;
 }
 
 #backBtn::before{
@@ -74,18 +77,6 @@ button{
     gap: 1rem;
 }
 
-
-/* #results div{
-    position: relative;
-    border-radius: 10px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: transform 0.2 ease;
-} */
-
-/* #results div:hover{
-    transform: scale(1.04);
-} */
 
 .card{
     position: relative;
@@ -282,6 +273,11 @@ img{
     box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     width: 100%;
     margin: 0 auto;
+    transition: transform 0.2s ease;
+}
+
+.detail-container:hover{
+    transform: scale(1.01);
 }
 
 .detail{
@@ -320,15 +316,52 @@ img{
     gap: 0.5rem 1rem;
     margin-bottom: 1rem;
     opacity: 0.8;
+    font-size:0.95rem;
 }
 
 .meta span{
     white-space: nowrap;
 }
 
+.rating {
+    padding: 0.2rem 0.5rem;
+    border-radius:999px;
+    font-weight: 500;
+    color: white;
+}
+
+.rating-red{
+    background-color: #dc2626;
+}
+.rating-orange{
+    background-color: #f97316;
+}
+.rating-yellow{
+    background-color: #eab308;
+    color: black;
+}
+.rating-green-light{
+    background-color: #84cc16;
+}
+.rating-green{
+    background-color: #22c55e;
+}
+.rating-green-strong{
+    background-color: #16a34a;
+}
+.rating-purple{
+    background-color: var(--identity-color);
+}
+
 .plot { 
     margin: 1rem 0;
-    line-height: 1.6;
+    line-height: 1.4;
+    font-size: 0.9rem;
+}
+
+.extra{
+    margin-top: 1rem;
+    font-size: 0.85rem;
 }
 
 @media (min-width: 768px) {

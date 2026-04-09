@@ -64,6 +64,8 @@ export function clearStatus(){
     status.textContent = ""
 }
 
+
+
 export function renderDetail(title) {
     const container = document.querySelector("#results")
     document.querySelector("#filters").style.display = "none"
@@ -73,6 +75,27 @@ export function renderDetail(title) {
     const rating = title.imdbRating !== "N/A" ? title.imdbRating : "Sin rating"
     const genre = title.Genre !== "N/A" ? title.Genre : "Sin género"
 
+    const ratingValue = parseFloat(title.imdbRating) || 0
+
+    let ratingClass = ""
+
+    if (ratingValue <= 3.9) {
+        ratingClass = "rating-red"
+    } else if (ratingValue <= 4.9) {
+        ratingClass = "rating-orange"
+    } else if (ratingValue <= 6.4) {
+        ratingClass = "rating-yellow"
+    } else if (ratingValue <= 7.4) {
+        ratingClass = "rating-green-light"
+    } else if (ratingValue <= 8.4) {
+        ratingClass = "rating-green"
+    } else if (ratingValue <= 8.9) {
+        ratingClass = "rating-green-strong"
+    }else {
+        ratingClass = "rating-purple"
+    }
+
+
     container.innerHTML = `
     <button id="backBtn"> ← Volver</button>
     <div class="detail-container">
@@ -81,14 +104,16 @@ export function renderDetail(title) {
         <div class="detail-info">
             <h2>${title.Title}</h2>
             <p class="meta">
-                <span>⭐ ${rating}</span>
+                <span class="rating ${ratingClass}">⭐ ${rating}</span>
                 <span>🎭 ${genre}</span>
                 <span>📅 ${title.Year}</span>
             </p>
             
-            <p><strong>Trama:</strong>${title.Plot}</p>
+            <p class="plot"><strong>Trama:</strong>${title.Plot}</p>
+            <div class="extra">
             <p><strong>Director:</strong>${title.Director}</p>
             <p><strong>Actores:</strong>${title.Actors}</p> 
+            </div>
         </div>    
 
         </div>
