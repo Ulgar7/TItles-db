@@ -1,4 +1,4 @@
-import { handleSelectTitle, searchTitles, removeFromHistory, clearHistory} from "./logic.js"
+import { handleSelectTitle, searchTitles, removeFromHistory, clearHistory, toggleFavorite} from "./logic.js"
 import { state } from "./state.js"
 
 
@@ -95,6 +95,7 @@ export function renderDetail(title) {
         ratingClass = "rating-purple"
     }
 
+    const isFavorite = state.favorites.some(f => f.imdbID === title.imdbID)
 
     container.innerHTML = `
     <button id="backBtn"> ← Volver</button>
@@ -113,6 +114,8 @@ export function renderDetail(title) {
             <div class="extra">
             <p><strong>Director:</strong>${title.Director}</p>
             <p><strong>Actores:</strong>${title.Actors}</p> 
+            <button id="favBtn" class="${isFavorite ? "active" : ""}">
+            ${isFavorite ? "★ Quitar de favoritos" : "☆ Agregar a favoritos"}</button>
             </div>
         </div>    
 
@@ -129,6 +132,11 @@ export function renderDetail(title) {
         document.querySelector("#status").style.display = "flex"
         document.body.classList.remove("detail-view")  
         renderApp()
+    })
+
+    document.querySelector("#favBtn").addEventListener("click", () => {
+        toggleFavorite(title)
+        renderDetail(title)
     })
     
 }

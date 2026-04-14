@@ -8,7 +8,8 @@ export const state = {
     history: [],
     type:"all",
     page: 1,
-    totalResults: 0
+    totalResults: 0,
+    favorites: []
 }
 
 

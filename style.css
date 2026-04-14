@@ -276,9 +276,9 @@ img{
     transition: transform 0.2s ease;
 }
 
-.detail-container:hover{
+/* .detail-container:hover{
     transform: scale(1.01);
-}
+} */
 
 .detail{
     display: flex;
@@ -368,6 +368,18 @@ img{
     margin-top: 1rem;
     font-size: 0.85rem;
 }
+
+#favBtn {
+    margin-top: 1rem;
+    border-radius: 999px;
+    border: 1px solid #ccc;
+}
+
+#favBtn.active {
+  background-color: var(--identity-color);
+  color: white;
+}
+
 
 @media (min-width: 768px) {
     #results {

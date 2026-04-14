@@ -50,3 +50,9 @@ const filters = document.querySelectorAll("#filters button")
             }
         })
     })
+
+    const savedFavorites = localStorage.getItem("favorites")
+
+    if(savedFavorites) {
+        state.favorites = JSON.parse(savedFavorites)
+    }

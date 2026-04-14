@@ -78,3 +78,21 @@ export function clearHistory() {
 
     renderHistory(state.history)
 }
+
+export function toggleFavorite(title){
+    const exists = state.favorites.some(f => f.imdbID === title.imdbID)
+
+    console.log("favorites:", state.favorites)
+    console.log("clicked:", title.imdbID)
+
+    if(exists) {
+        state.favorites = state.favorites.filter(f => f.imdbID !== title.imdbID)
+    }else {
+        state.favorites.push({
+            imdbID: title.imdbID,
+            Title: title.Title,
+            Poster: title.Poster
+        })
+    }
+    localStorage.setItem("favorites", JSON.stringify(state.favorites))
+}
