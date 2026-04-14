@@ -96,3 +96,9 @@ export function toggleFavorite(title){
     }
     localStorage.setItem("favorites", JSON.stringify(state.favorites))
 }
+
+export function showFavorites() {
+    state.view = "favorites"
+    renderApp()
+}
+

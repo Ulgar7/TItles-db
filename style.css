@@ -380,7 +380,32 @@ img{
   color: white;
 }
 
+.top-bar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
 
+#favoritesBtn{
+    border-radius: 999px;
+    border: 1px solid #ccc;
+    background: white;
+    cursor: pointer;
+}
+
+.favorites-view #pagination {
+    display: none;
+}
+
+.favorites-view #filters{
+    display: none;
+}
+
+.favorites-view #favoritesBtn {
+    background-color: var(--identity-color);
+    color: white;
+}
 @media (min-width: 768px) {
     #results {
         grid-template-columns: repeat(3, 1fr);

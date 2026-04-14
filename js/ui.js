@@ -146,10 +146,24 @@ export function renderApp(){
 
     if (state.view === "detail"){
         renderDetail(state.selectedTitle)
-    }else{
+    }else if(state.view === "favorites"){
+
+        if(state.favorites.length === 0) {
+            document.querySelector("#status").textContent = "No tenés favoritos todavía ⭐" 
+            document.querySelector("#results").innerHTML = ""
+            return
+        }
+
+        renderTitles(state.favorites)
+        document.querySelector("#status").textContent = "⭐ Tus favoritos"
+    }
+    else{
         renderTitles(state.titles)
     }
-}   
+}
+
+
+
 
 export function renderHistory(history) {
     const container = document.querySelector("#status")
@@ -234,6 +248,8 @@ export function renderPagination() {
 
     container.appendChild(pagination)
 }
+
+
 
 
 

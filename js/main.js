@@ -1,4 +1,4 @@
-import { handleSelectTitle, searchTitles } from "./logic.js"
+import { handleSelectTitle, searchTitles, showFavorites } from "./logic.js"
 import { renderHistory } from "./ui.js"
 import { state } from "./state.js"
 
@@ -51,8 +51,14 @@ const filters = document.querySelectorAll("#filters button")
         })
     })
 
-    const savedFavorites = localStorage.getItem("favorites")
+const savedFavorites = localStorage.getItem("favorites")
 
     if(savedFavorites) {
         state.favorites = JSON.parse(savedFavorites)
     }
+
+
+document.querySelector("#favoritesBtn").addEventListener("click", () => {
+    showFavorites()
+    document.body.classList.add("favorites-view")
+})

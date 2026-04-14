@@ -9,13 +9,16 @@
 <body>
     <h1><a href="index.html">Buscador de títulos</a></h1>
     
-    <form id="search-form">
-        <input type="text"
-        id="search-input"
-        placeholder="Buscar película..."
-        autocomplete="off">
-        <button class="btnSubmit" type="submit">Buscar</button>
-    </form>
+    <div class="top-bar">
+        <form id="search-form">
+            <input type="text"
+            id="search-input"
+            placeholder="Buscar película..."
+            autocomplete="off">
+            <button class="btnSubmit" type="submit">Buscar</button>
+        </form>
+        <button id="favoritesBtn">⭐</button>
+    </div>
     <div id="status"></div>
     <div class="layout">
         <aside id="filters">
