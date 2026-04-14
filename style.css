@@ -295,6 +295,10 @@ img{
     display: block;
 }
 
+.detail-view #pagination {
+    display: none;
+}
+
 .detail img{
     width: 250px;
     border-radius: 12px;
@@ -309,6 +313,7 @@ img{
     font-size: 2rem;
     margin-bottom: 0.5rem;
 }
+
 
 .meta{
     display: flex;
