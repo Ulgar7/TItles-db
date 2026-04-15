@@ -70,7 +70,7 @@ export function renderDetail(title) {
     const container = document.querySelector("#results")
     document.querySelector("#filters").style.display = "none"
     document.querySelector("#status").style.display = "none"       
-    document.body.classList.add("detail-view")
+    
 
     const rating = title.imdbRating !== "N/A" ? title.imdbRating : "Sin rating"
     const genre = title.Genre !== "N/A" ? title.Genre : "Sin género"
@@ -128,15 +128,17 @@ export function renderDetail(title) {
     document.querySelector("#backBtn").addEventListener("click", () =>{
         state.view = "list"
         console.log(state)
-        document.querySelector("#filters").style.display = "flex"
-        document.querySelector("#status").style.display = "flex"
-        document.body.classList.remove("detail-view")  
+        // document.querySelector("#filters").style.display = "flex"
+        // document.querySelector("#status").style.display = "flex"
+        // document.body.classList.remove("detail-view")  
         renderApp()
+        
     })
 
     document.querySelector("#favBtn").addEventListener("click", () => {
         toggleFavorite(title)
-        renderDetail(title)
+        renderApp()
+        // renderDetail(title)
     })
     
 }
@@ -144,9 +146,19 @@ export function renderDetail(title) {
 export function renderApp(){
     console.log("renderApp:", state)
 
+    document.body.classList.remove("detail-view", "favorites-view")
+    
+    document.querySelector("#filters").style.display = "flex"
+    document.querySelector("#status").style.display = "flex"
+    document.querySelector("#status").textContent = ""
+
     if (state.view === "detail"){
+        document.body.classList.add("detail-view")
         renderDetail(state.selectedTitle)
     }else if(state.view === "favorites"){
+        document.body.classList.add("favorites-view")
+
+        document.querySelector("#filters").style.display = "none"
 
         if(state.favorites.length === 0) {
             document.querySelector("#status").textContent = "No tenés favoritos todavía ⭐" 
@@ -159,6 +171,7 @@ export function renderApp(){
     }
     else{
         renderTitles(state.titles)
+        renderHistory(state.history)
     }
 }
 

@@ -394,6 +394,16 @@ img{
     cursor: pointer;
 }
 
+.favorites-view .layout {
+    display: block;
+}
+
+.favorites-view #results { 
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+}
+
+
 .favorites-view #pagination {
     display: none;
 }
@@ -406,6 +416,11 @@ img{
     background-color: var(--identity-color);
     color: white;
 }
+
+/* Dynamic grid, 1 movie cannot use the whole screen, neither 2. Multiple favorite
+ toggle, when i toggle to favorite, it's not saved as favorites instantly, so if i marked
+  as favorite more than one, only counts the last. Also, strict grid, favorites view
+  heritage other grids, like searcher or detail-view */
 @media (min-width: 768px) {
     #results {
         grid-template-columns: repeat(3, 1fr);

@@ -60,5 +60,5 @@ const savedFavorites = localStorage.getItem("favorites")
 
 document.querySelector("#favoritesBtn").addEventListener("click", () => {
     showFavorites()
-    document.body.classList.add("favorites-view")
+    
 })
