@@ -1,5 +1,5 @@
 import { handleSelectTitle, searchTitles, showFavorites } from "./logic.js"
-import { renderHistory } from "./ui.js"
+import { renderApp, renderHistory } from "./ui.js"
 import { state } from "./state.js"
 
 const params = new URLSearchParams(window.location.search)
@@ -45,7 +45,9 @@ const filters = document.querySelectorAll("#filters button")
 
             })
             
-            if(state.query){
+            if(state.view === "favorites"){
+                renderApp()
+            }else if(state.query){
                 await searchTitles(state.query)
             }
         })
@@ -60,5 +62,5 @@ const savedFavorites = localStorage.getItem("favorites")
 
 document.querySelector("#favoritesBtn").addEventListener("click", () => {
     showFavorites()
-    
+    console.log(state.favorites)
 })

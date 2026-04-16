@@ -158,15 +158,20 @@ export function renderApp(){
     }else if(state.view === "favorites"){
         document.body.classList.add("favorites-view")
 
-        document.querySelector("#filters").style.display = "none"
+        // document.querySelector("#filters").style.display = "none"
 
-        if(state.favorites.length === 0) {
+        let filteredFavorites = state.favorites
+        if(state.type !== "all"){
+            filteredFavorites = state.favorites.filter(f => f.Type === state.type)
+        }
+
+        if(filteredFavorites.length === 0) {
             document.querySelector("#status").textContent = "No tenés favoritos todavía ⭐" 
             document.querySelector("#results").innerHTML = ""
             return
         }
 
-        renderTitles(state.favorites)
+        renderTitles(filteredFavorites)
         document.querySelector("#status").textContent = "⭐ Tus favoritos"
     }
     else{

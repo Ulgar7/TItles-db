@@ -96,7 +96,8 @@ export function toggleFavorite(title) {
                 imdbID: title.imdbID,
                 Title: title.Title,
                 Poster: title.Poster,
-                Year: title.Year
+                Year: title.Year,
+                Type: title.Type
             }
         ]
     }
@@ -105,24 +106,7 @@ export function toggleFavorite(title) {
     localStorage.setItem("favorites", JSON.stringify(updatedFavorites))
 }
 
-// export function toggleFavorite(title){
-//     const exists = state.favorites.some(f => f.imdbID === title.imdbID)
 
-//     console.log("favorites:", state.favorites)
-//     console.log("clicked:", title.imdbID)
-
-//     if(exists) {
-//         state.favorites = state.favorites.filter(f => f.imdbID !== title.imdbID)
-//     }else {
-//         state.favorites.push({
-//             imdbID: title.imdbID,
-//             Title: title.Title,
-//             Poster: title.Poster,
-//             Year: title.Year
-//         })
-//     }
-//     localStorage.setItem("favorites", JSON.stringify(state.favorites))
-// }
 
 export function showFavorites() {
     state.view = "favorites"

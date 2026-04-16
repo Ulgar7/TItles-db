@@ -408,8 +408,8 @@ img{
     display: none;
 }
 
-.favorites-view #filters{
-    display: none;
+.favorites-view #filters {
+    margin-bottom: 20px;
 }
 
 .favorites-view #favoritesBtn {
