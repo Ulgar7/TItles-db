@@ -1,11 +1,17 @@
-import { handleSelectTitle, searchTitles, removeFromHistory, clearHistory, toggleFavorite} from "./logic.js"
+import { searchTitles, removeFromHistory, clearHistory, goToDetail, goToList, toggleFavoriteAndRefresh} from "./logic.js"
 import { state } from "./state.js"
 
 
+const DOM = {
+    results: document.querySelector("#results"),
+    status: document.querySelector("#status"),
+    filters: document.querySelector("#filters"),
+    pagination: document.querySelector("#pagination")
+}
 
 export function renderTitles(titles){
     
-    const resultsContainer = document.querySelector( "#results" )
+    const resultsContainer = DOM.results
     
     resultsContainer.innerHTML = ""
 
@@ -15,10 +21,10 @@ export function renderTitles(titles){
             ? title.Poster
             : "https://placehold.co/300x450"
         
-         const card = document.createElement("div")
-         card.classList.add("card")
+        const card = document.createElement("div")
+        card.classList.add("card")
 
-         card.innerHTML = `
+        card.innerHTML = `
             
         <a href="?id=${title.imdbID}" class="poster-link">         
             <img src="${poster}" alt="${title.Title}"
@@ -30,13 +36,13 @@ export function renderTitles(titles){
                 <h3>${title.Title}</h3>
                 <p>${title.Year}</p>
             </div>
-         
-         `
-          card.addEventListener("click", (e) => {
+        
+        `
+        card.addEventListener("click", (e) => {
             e.preventDefault()
 
             // window.history.pushState(null, "", `?id=${title.imdbID}`)
-            handleSelectTitle(title.imdbID)
+            goToDetail(title.imdbID)
         
     })
     
@@ -50,26 +56,23 @@ export function renderTitles(titles){
 }
 
 export function showLoading() {
-    const status = document.querySelector("#status")
-    status.textContent  = "Buscando..."
+    DOM.status.textContent  = "Buscando..."
 }
 
 export function showEmpty(){
-    const status = document.querySelector("#status")
-    status.textContent = "No se encontraron resultados"
+    DOM.status.textContent = "No se encontraron resultados"
 }
 
 export function clearStatus(){
-    const status = document.querySelector("#status")
-    status.textContent = ""
+    DOM.status.textContent = ""
 }
 
 
 
 export function renderDetail(title) {
-    const container = document.querySelector("#results")
-    document.querySelector("#filters").style.display = "none"
-    document.querySelector("#status").style.display = "none"       
+    const container = DOM.results
+    DOM.filters.style.display = "none"
+    DOM.status.style.display = "none"   
     
 
     const rating = title.imdbRating !== "N/A" ? title.imdbRating : "Sin rating"
@@ -126,65 +129,75 @@ export function renderDetail(title) {
         
     `
     document.querySelector("#backBtn").addEventListener("click", () =>{
-        state.view = "list"
+        goToList()
         console.log(state)
-        // document.querySelector("#filters").style.display = "flex"
-        // document.querySelector("#status").style.display = "flex"
-        // document.body.classList.remove("detail-view")  
-        renderApp()
         
     })
 
     document.querySelector("#favBtn").addEventListener("click", () => {
-        toggleFavorite(title)
-        renderApp()
-        // renderDetail(title)
+        toggleFavoriteAndRefresh(title)
     })
     
 }
 
+
+
 export function renderApp(){
     console.log("renderApp:", state)
 
+    resetUI()
+
+    if( state.view === "detail"){
+        renderDetailView()
+    } else if(state.view === "favorites") {
+        renderFavoritesView()
+    }else {
+        renderListView()
+    }
+
+}
+
+function resetUI(){
     document.body.classList.remove("detail-view", "favorites-view")
-    
-    document.querySelector("#filters").style.display = "flex"
-    document.querySelector("#status").style.display = "flex"
-    document.querySelector("#status").textContent = ""
 
-    if (state.view === "detail"){
-        document.body.classList.add("detail-view")
-        renderDetail(state.selectedTitle)
-    }else if(state.view === "favorites"){
-        document.body.classList.add("favorites-view")
+    DOM.filters.style.display = "flex"
+    DOM.status.style.display = "flex"
+    DOM.status.textContent = ""
+}
 
-        // document.querySelector("#filters").style.display = "none"
+function renderDetailView(){
+    document.body.classList.add("detail-view")
+    renderDetail(state.selectedTitle)
+}
 
-        let filteredFavorites = state.favorites
-        if(state.type !== "all"){
-            filteredFavorites = state.favorites.filter(f => f.Type === state.type)
-        }
+function renderFavoritesView() {
+    document.body.classList.add("favorites-view")
 
-        if(filteredFavorites.length === 0) {
-            document.querySelector("#status").textContent = "No tenés favoritos todavía ⭐" 
-            document.querySelector("#results").innerHTML = ""
-            return
-        }
+    let filteredFavorites = state.favorites
 
-        renderTitles(filteredFavorites)
-        document.querySelector("#status").textContent = "⭐ Tus favoritos"
+    if(state.type !== "all"){
+        filteredFavorites = state.favorites.filter(f => f.Type === state.type)
     }
-    else{
-        renderTitles(state.titles)
-        renderHistory(state.history)
+
+    if(filteredFavorites.length === 0) {
+        DOM.status.textContent = "No tenés favoritos todavía ⭐"
+        DOM.results.innerHTML = ""
+        return
     }
+
+    renderTitles(filteredFavorites)
+    document.querySelector("#status").textContent = "⭐ Tus favoritos"
+}
+
+function renderListView() {
+    renderTitles(state.titles)
+    renderHistory(state.history)
 }
 
 
 
-
 export function renderHistory(history) {
-    const container = document.querySelector("#status")
+    const container = DOM.status
 
     container.innerHTML = ""
     
@@ -219,7 +232,7 @@ export function renderHistory(history) {
 }
 
 export function renderPagination() {
-    const container = document.querySelector("#pagination")
+    const container = DOM.pagination
     container.innerHTML = ""    
 
     const totalPages = Math.ceil(state.totalResults / 10)

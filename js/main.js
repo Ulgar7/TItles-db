@@ -1,4 +1,4 @@
-import { handleSelectTitle, searchTitles, showFavorites } from "./logic.js"
+import { goToFavorites, handleSelectTitle, searchTitles, showFavorites } from "./logic.js"
 import { renderApp, renderHistory } from "./ui.js"
 import { state } from "./state.js"
 
@@ -61,6 +61,6 @@ const savedFavorites = localStorage.getItem("favorites")
 
 
 document.querySelector("#favoritesBtn").addEventListener("click", () => {
-    showFavorites()
+    goToFavorites()
     console.log(state.favorites)
 })
