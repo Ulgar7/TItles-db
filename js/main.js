@@ -64,3 +64,4 @@ document.querySelector("#favoritesBtn").addEventListener("click", () => {
     goToFavorites()
     console.log(state.favorites)
 })
+

@@ -100,7 +100,11 @@ export function toggleFavorite(title) {
     } else {
         updatedFavorites = [
             ...savedFavorites,
-            normalizeTitle(title)
+            {
+                ...normalizeTitle(title),
+                addedAt: Date.now()
+            }
+            
         ]
     }
 
@@ -143,3 +147,24 @@ export function toggleFavoriteAndRefresh(title) {
     renderApp()
 }
 
+export function sortFavorites(favorites, sortType) {
+    const sorted = [...favorites]
+
+    if (sortType === "recent") {
+        return sorted.sort((a,b) => (b.addedAt || 0) - (a.addedAt || 0))
+    }
+
+    if (sortType === "title") {
+        return sorted.sort((a,b) => a.Title.localeCompare(b.Title))
+    }
+
+    if (sortType === "year") {
+        const getYear = (year) => {if (!year) return 0
+        const match = year.match(/\d{4}/)
+        return match ? Number(match[0]) : 0    
+        }
+        return sorted.sort((a,b) => getYear(b.Year) - getYear(a.Year))
+    }
+
+    return sorted
+}

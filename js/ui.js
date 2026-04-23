@@ -1,4 +1,4 @@
-import { searchTitles, removeFromHistory, clearHistory, goToDetail, goToList, toggleFavoriteAndRefresh} from "./logic.js"
+import { searchTitles, removeFromHistory, clearHistory, goToDetail, goToList, toggleFavoriteAndRefresh, sortFavorites} from "./logic.js"
 import { state } from "./state.js"
 
 
@@ -6,7 +6,7 @@ const DOM = {
     results: document.querySelector("#results"),
     status: document.querySelector("#status"),
     filters: document.querySelector("#filters"),
-    pagination: document.querySelector("#pagination")
+    pagination: document.querySelector("#pagination"),
 }
 
 export function renderTitles(titles){
@@ -47,9 +47,9 @@ export function renderTitles(titles){
     })
     
 
-         resultsContainer.appendChild(card)
+        resultsContainer.appendChild(card)
 
-         
+    
     })
 
     
@@ -134,9 +134,18 @@ export function renderDetail(title) {
         
     })
 
-    document.querySelector("#favBtn").addEventListener("click", () => {
+    document.querySelector("#favBtn").addEventListener("click", (e) => {
+        const btn = e.currentTarget
+
+        btn.classList.add("pop")
+
+        setTimeout(() => {
+            btn.classList.remove("pop")
+        },200)
+
         toggleFavoriteAndRefresh(title)
     })
+    
     
 }
 
@@ -162,7 +171,11 @@ function resetUI(){
 
     DOM.filters.style.display = "flex"
     DOM.status.style.display = "flex"
+    // DOM.sort.style.display = "none" 
     DOM.status.textContent = ""
+
+    const existingSort = document.querySelector(".custom-select")
+    if (existingSort) existingSort.remove()
 }
 
 function renderDetailView(){
@@ -171,13 +184,37 @@ function renderDetailView(){
 }
 
 function renderFavoritesView() {
+    const topBar = document.querySelector(".top-actions")
+
+    let actions = document.querySelector(".top-actions")
+
+    if(!actions) {
+        actions = document.createElement("div")
+        actions.classList.add("top-actions")
+
+        const topBar = document.querySelector(".top-bar")
+        const favoritesBtn = document.querySelector("#favoritesBtn")
+
+        topBar.appendChild(actions)
+        actions.appendChild(favoritesBtn)
+    }
+
+    actions.appendChild(renderSort())
+
+
+    
+
     document.body.classList.add("favorites-view")
+
+    
 
     let filteredFavorites = state.favorites
 
     if(state.type !== "all"){
-        filteredFavorites = state.favorites.filter(f => f.Type === state.type)
+        filteredFavorites = filteredFavorites.filter(f => f.Type === state.type)
     }
+
+    filteredFavorites = sortFavorites(filteredFavorites, state.sort)
 
     if(filteredFavorites.length === 0) {
         DOM.status.textContent = "No tenés favoritos todavía ⭐"
@@ -194,6 +231,66 @@ function renderListView() {
     renderHistory(state.history)
 }
 
+function renderSort() {
+    const container = document.createElement("div")
+    container.classList.add("custom-select")
+
+    const button = document.createElement("button")
+    button.classList.add("custom-select-btn")
+    button.textContent = getSortLabel(state.sort) +  " ⌄"
+
+    const list = document.createElement("ul")
+    list.classList.add("custom-select-list")
+
+    const options = [
+        {value: "recent", label: "Recientes"},
+        {value:"title", label: "Título"},
+        {value:"year", label: "Año"}
+    ]
+
+    options.forEach(opt => {
+        const li = document.createElement("li")
+        li.textContent = opt.label
+
+        if(opt.value === state.sort) {
+            li.classList.add("active")
+        }
+
+        li.addEventListener("click" , () => {
+            state.sort = opt.value
+            renderApp()
+        })
+
+        list.appendChild(li)
+    })
+
+    button.addEventListener("click", (e) => {
+        e.stopPropagation()
+        container.classList.toggle("open")
+    })
+
+    setTimeout(() => {
+        document.addEventListener("click", handleOutsideClick)
+    },0)
+
+    function handleOutsideClick(e) {
+        if(!container.contains(e.target)){
+            container.classList.remove("open")
+            document.removeEventListener("click", handleOutsideClick)
+        }
+    }
+
+    container.appendChild(button)
+    container.appendChild(list)
+
+    return container
+}
+
+function getSortLabel(value) {
+    if(value === "recent") return "Recientes"
+    if(value === "title") return "Título"
+    if(value === "year") return "Año"
+}
 
 
 export function renderHistory(history) {

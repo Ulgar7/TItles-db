@@ -9,7 +9,8 @@ export const state = {
     type:"all",
     page: 1,
     totalResults: 0,
-    favorites: []
+    favorites: [],
+    sort: "recent"
 }
 
 
