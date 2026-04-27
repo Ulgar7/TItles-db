@@ -15,9 +15,12 @@ export function normalizeTitle(title){
 }
 
 export async function searchTitles(query, page = 1) {
+    
+
     try {
         const normalizedQuery = query.toLowerCase()
 
+        state.view = "list"
         state.query = query
         state.page = page
         state.loading = true

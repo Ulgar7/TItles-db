@@ -10,7 +10,8 @@ export const state = {
     page: 1,
     totalResults: 0,
     favorites: [],
-    sort: "recent"
+    sort: "recent",
+    favoritesQuery: ""
 }
 
 

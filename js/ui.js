@@ -171,11 +171,14 @@ function resetUI(){
 
     DOM.filters.style.display = "flex"
     DOM.status.style.display = "flex"
-    // DOM.sort.style.display = "none" 
     DOM.status.textContent = ""
+
+    const existingSearch = document.querySelector(".favorites-search")
+    if (existingSearch) existingSearch.remove()
 
     const existingSort = document.querySelector(".custom-select")
     if (existingSort) existingSort.remove()
+    
 }
 
 function renderDetailView(){
@@ -185,6 +188,7 @@ function renderDetailView(){
 
 function renderFavoritesView() {
     const topBar = document.querySelector(".top-actions")
+    
 
     let actions = document.querySelector(".top-actions")
 
@@ -198,21 +202,26 @@ function renderFavoritesView() {
         topBar.appendChild(actions)
         actions.appendChild(favoritesBtn)
     }
-
-    actions.appendChild(renderSort())
-
-
     
-
+        actions.appendChild(renderFavoritesSearch())
+        actions.appendChild(renderSort())
+    
+    
     document.body.classList.add("favorites-view")
 
-    
 
     let filteredFavorites = state.favorites
 
+    
     if(state.type !== "all"){
         filteredFavorites = filteredFavorites.filter(f => f.Type === state.type)
     }
+
+    if (state.favoritesQuery) {
+    filteredFavorites = filteredFavorites.filter(f =>
+        f.Title.toLowerCase().includes(state.favoritesQuery)
+    )
+}
 
     filteredFavorites = sortFavorites(filteredFavorites, state.sort)
 
@@ -375,6 +384,34 @@ export function renderPagination() {
     }
 
     container.appendChild(pagination)
+}
+
+function renderFavoritesSearch() {
+     const input = document.createElement("input")
+
+     input.type = "text"
+     input.placeholder = "Buscar en favoritos..."
+     input.classList.add("favorites-search")
+
+     input.value = state.favoritesQuery || ""
+
+     input.addEventListener("input" , (e) => {
+        state.favoritesQuery = e.target.value.toLowerCase()
+
+        const cursorPos = e.target.selectionStart
+
+        renderApp()
+
+        setTimeout(() => {
+            const newInput = document.querySelector(".favorites-search")
+            if(newInput) {
+                newInput.focus()
+                newInput.setSelectionRange(cursorPos, cursorPos)
+            }
+        }, 0)
+     })
+
+     return input
 }
 
 
