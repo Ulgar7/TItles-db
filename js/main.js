@@ -65,3 +65,7 @@ document.querySelector("#favoritesBtn").addEventListener("click", () => {
     console.log(state.favorites)
 })
 
+if(!id && !query) {
+    state.view = "home"
+    renderApp()
+}

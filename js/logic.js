@@ -171,3 +171,79 @@ export function sortFavorites(favorites, sortType) {
 
     return sorted
 }
+
+export async function getHotNowTitles() {
+    
+    const queries = [ "avengers" , "batman", "spider man", "star wars", "harry potter"]
+    
+    const shuffled = queries.sort(()=> 0.5 - Math.random())
+    const selectedQueries = shuffled.slice(0,3)
+
+    const results = await Promise.all(
+        selectedQueries.map( q => fetchTitles(q, "all", 1))
+    )
+
+    const allTitles = results
+    .flatMap(r => r.Search || [])
+    .slice(0,15)
+
+    const detailed = await Promise.all(
+        allTitles.map( t => fetchTitleById(t.imdbID))
+    )
+
+    let filtered = detailed.filter( t => {
+        const rating = Number(t.imdbRating)
+        return !isNaN(rating) && rating >= 6
+    })
+
+    filtered = filtered.sort(() => 0.5 - Math.random())
+
+    if(filtered.length < 5) {
+        return detailed.slice(0,5)
+    }
+
+    return filtered.slice(0,5)
+}
+
+export async function getRecommendedTitles() {
+
+    if (state.favorites.length === 0){
+        return await getHotNowTitles()
+    }
+
+    const favQueries = state.favorites
+        .map(f => f.Title.split( " ") [0])
+        .filter(Boolean)
+
+    const shuffled = favQueries.sort(() => 0.5 - Math.random())
+    const selectedQueries = shuffled.slice(0, 3)
+
+    const results = await Promise.all(
+        selectedQueries.map(q => fetchTitles(q, "all", 1))
+    )
+
+    const allTitles = results
+        .flatMap( r => r.Search || [])
+        .slice(0, 15)
+
+        const detailed = await Promise.all(
+            allTitles.map(t => fetchTitleById(t.imdbID))
+        )
+
+        let filtered = detailed.filter(t => {
+            const rating = Number(t.imdbRating)
+            return !isNaN(rating) && rating >= 6
+        })
+
+        filtered = filtered.sort(() => 0.5 - Math.random())
+
+        const favIds = new Set(state.favorites.map( f => f.imdbID))
+
+        filtered = filtered.filter( t => !favIds.has(t.imdbID))
+
+        if(filtered.length < 5) {
+            return detailed.slice(0,5)
+        }
+
+        return filtered.slice(0,5)
+}

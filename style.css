@@ -536,6 +536,22 @@ body.favorites-view #favoritesBtn::before{
     color: white;
 }
 
+.home-section {
+    margin-bottom: 2rem;
+    width: 100%;
+    grid-column: 1 / -1;
+}
+
+.home-section h2{
+    margin-bottom: 0.8rem;
+}
+
+.home-row {
+    display: grid;
+    grid-template-columns: repeat(5,minmax(140px, 1fr));
+    gap: 1rem;
+}
+
 
 @media (min-width: 768px) {
     #results {

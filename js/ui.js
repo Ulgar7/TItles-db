@@ -1,4 +1,4 @@
-import { searchTitles, removeFromHistory, clearHistory, goToDetail, goToList, toggleFavoriteAndRefresh, sortFavorites} from "./logic.js"
+import { searchTitles, removeFromHistory, clearHistory, goToDetail, goToList, toggleFavoriteAndRefresh, sortFavorites, getHotNowTitles, getRecommendedTitles} from "./logic.js"
 import { state } from "./state.js"
 
 
@@ -160,7 +160,10 @@ export function renderApp(){
         renderDetailView()
     } else if(state.view === "favorites") {
         renderFavoritesView()
-    }else {
+    } else if(state.view === "home"){
+        renderHomeView()
+    }
+    else {
         renderListView()
     }
 
@@ -415,6 +418,66 @@ function renderFavoritesSearch() {
 }
 
 
+async function renderHomeView() {
+    
+    document.body.classList.remove("detail-view" , "favorites-view")
 
+    DOM.filters.style.display = "none"
+    DOM.status.style.display = "none"
+    DOM.pagination.style.display = "none"
+
+    DOM.results.innerHTML = `<p>Cargando...</p>`
+
+    const hotNow = await getHotNowTitles()
+    const recommended = await getRecommendedTitles()
+
+    DOM.results.innerHTML = "" 
+
+    DOM.results.appendChild(createSection("🔥 Mejores calificados", hotNow))
+    DOM.results.appendChild(createSection("🎯 Recomendado para vos", recommended))
+
+}
+
+function createSection(title, items) {
+    const section = document.createElement("div")
+    section.classList.add("home-section")
+
+    const h2 = document.createElement("h2")
+    h2.textContent = title
+
+    const row = document.createElement("div")
+    row.classList.add("home-row")
+
+    items.forEach(item => {
+        const card = createHomeCard(item)
+        row.appendChild(card)
+    })
+
+    section.appendChild(h2)
+    section.appendChild(row)
+
+    return section
+}
+
+function createHomeCard(title){
+    
+    const card = document.createElement("div")
+    card.classList.add("card")
+
+    card.innerHTML = `
+    <img src="${title.Poster}" alt="${title.Title}"
+        onerror="this.src='https://placehold.co/300x450'">
+    <div class="card-overlay">
+        <h3>${title.Title}</h3>
+        <p>${title.Year}</p>
+    </div>
+    `
+
+    card.addEventListener("click", () => {
+        goToDetail(title.imdbID)
+    })
+
+    return card
+}
 
 
